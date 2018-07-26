@@ -1,22 +1,13 @@
 # LQ-Nets
 
-By [Dongqing Zhang](https://github.com/zdqzeros), [Jiaolong Yang](https://github.com/yangjiaolong), [Dongqiangzi Ye](https://github.com/EowinYe), [Gang Hua](https://www.microsoft.com/en-us/research/people/ganghua/).
+By [Dongqing Zhang](https://github.com/zdqzeros), [Jiaolong Yang](http://jlyang.org), [Dongqiangzi Ye](https://github.com/EowinYe), [Gang Hua](https://www.microsoft.com/en-us/research/people/ganghua/).
 
 Microsoft Research Asia (MSRA).
 
 ### Introduction
-This repository contains the training code of LQ-Nets introduced in our ECCV 2018 paper 
-"LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks".
+This repository contains the training code of LQ-Nets introduced in our ECCV 2018 paper:
 
-### Citation
-If you use our code or models in your research, please cite with
-
-    @inproceedings{ZhangYangYeECCV2018,
-        Author = {Dongqing Zhang, Jiaolong Yang, Dongqiangzi Ye, Gang Hua},
-        Title = {LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks},
-        Conference = {ECCV},
-        Year = {2018}
-    }
+D. Zhang*, J. Yang*, D. Ye* and G. Hua. LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks. ECCV 2018 (*: Equal contribution)
 
 ### Dependencies
 
@@ -25,7 +16,7 @@ If you use our code or models in your research, please cite with
 + TensorFlow >= 1.3.0
 + [TensorPack](https://github.com/tensorpack/tensorpack)
 
-### Example Usage
+### Usage
 
 Download the ImageNet dataset and decompress into the structure like
 
@@ -50,7 +41,7 @@ For more options, please refer to `python imagenet.py -h`.
 ### Results
 **ImageNet Experiments**
 
-Quantize both weight and activation
+Quantizing both weight and activation
 
 Model|Bit-width(W/A)|Top-1(%)|Top-5(%)
 :---:|:---:|:---:|:---:
@@ -73,7 +64,7 @@ VGG-Variant|2/2|68.8|88.6
 GoogLeNet-Variant|1/2|65.6|86.4
 GoogLeNet-Variant|2/2|68.2|88.1
 
-Quantize weight only
+Quantizing weight only
 
 Model|Bit-width(W/A)|Top-1(%)|Top-5(%)
 :---:|:---:|:---:|:---:
@@ -85,3 +76,12 @@ ResNet-50|4/32|76.4|93.1
 AlexNet|2/32|60.5|82.7
 
 
+### Citation
+If you use our code or models in your research, please cite with
+
+    @inproceedings{ZhangYangYeECCV2018,
+        Author = {Dongqing Zhang, Jiaolong Yang, Dongqiangzi Ye, Gang Hua},
+        Title = {LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks},
+        Booktitle = {European Conference on Computer Vision (ECCV)},
+        Year = {2018}
+    }
