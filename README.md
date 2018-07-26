@@ -75,6 +75,7 @@ ResNet-50|2/32|75.1|92.3
 ResNet-50|4/32|76.4|93.1
 AlexNet|2/32|60.5|82.7
 
+More results can be found in the paper.
 
 ### Citation
 If you use our code or models in your research, please cite with
