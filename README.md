@@ -81,8 +81,8 @@ More results can be found in the paper.
 If you use our code or models in your research, please cite with
 
     @inproceedings{ZhangYangYeECCV2018,
-        Author = {Dongqing Zhang, Jiaolong Yang, Dongqiangzi Ye, Gang Hua},
-        Title = {LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks},
-        Booktitle = {European Conference on Computer Vision (ECCV)},
-        Year = {2018}
+        author = {Zhang, Dongqing and Yang, Jiaolong and Ye, Dongqiangzi and Hua, Gang},
+        title = {LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks},
+        booktitle = {European Conference on Computer Vision (ECCV)},
+        year = {2018}
     }
