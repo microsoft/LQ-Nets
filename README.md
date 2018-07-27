@@ -7,7 +7,7 @@ Microsoft Research Asia (MSRA).
 ### Introduction
 This repository contains the training code of LQ-Nets introduced in our ECCV 2018 paper:
 
-D. Zhang*, J. Yang*, D. Ye* and G. Hua. LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks. ECCV 2018 (*: Equal contribution) [arXiv](https://arxiv.org/abs/1807.10029)
+D. Zhang*, J. Yang*, D. Ye* and G. Hua. LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks. ECCV 2018 (*: Equal contribution) [PDF](https://arxiv.org/pdf/1807.10029.pdf)
 
 ### Dependencies
 
