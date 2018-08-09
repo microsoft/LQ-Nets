@@ -78,7 +78,7 @@ AlexNet|2/32|60.5|82.7
 More results can be found in the paper.
 
 ### Citation
-If you use our code or models in your research, please cite with
+If you use our code or models in your research, please cite our paper with
 
     @inproceedings{ZhangYangYeECCV2018,
         author = {Zhang, Dongqing and Yang, Jiaolong and Ye, Dongqiangzi and Hua, Gang},
