@@ -70,5 +70,5 @@ def densenet_backbone(image, qw=1):
                   .apply(add_dense_block, 'block3', 16, last=True)
                   .BNReLU('bnrelu_last')
                   .GlobalAvgPooling('gap')
-                  .FullyConnected('linear', out_dim=1000, nl=tf.identity, W_init=variance_scaling_initializer(mode='FAN_IN'))())
+                  .FullyConnected('linear', out_dim=1000,  kernel_initializer=variance_scaling_initializer(mode='FAN_IN'))())
     return logits

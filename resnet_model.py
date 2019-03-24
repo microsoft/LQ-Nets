@@ -155,5 +155,5 @@ def resnet_backbone(image, num_blocks, group_func, block_func, qw=1):
                   .apply(group_func, 'group2', block_func, 256, num_blocks[2], 2)
                   .apply(group_func, 'group3', block_func, 512, num_blocks[3], 2, is_last=True)
                   .GlobalAvgPooling('gap')
-                  .FullyConnected('linear', 1000, nl=tf.identity)())
+                  .FullyConnected('linear', 1000)())
     return logits

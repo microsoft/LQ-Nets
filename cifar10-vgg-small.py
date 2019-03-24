@@ -11,7 +11,7 @@ from tensorpack import *
 from tensorpack.dataflow import dataset
 from tensorpack.tfutils.summary import *
 from tensorpack.tfutils.symbolic_functions import *
-from tensorpack.utils.gpu import get_nr_gpu
+from tensorpack.utils.gpu import get_num_gpu
 
 from learned_quantization import *
 
@@ -27,12 +27,11 @@ class Model(ModelDesc):
         self.qw = qw
         self.qa = qa
 
-    def _get_inputs(self):
-        return [InputDesc(tf.float32, [None, 32, 32, 3], 'input'),
-                InputDesc(tf.int32, [None], 'label')]
+    def inputs(self):
+        return [tf.TensorSpec([None, 32, 32, 3], tf.float32, 'input'),
+                tf.TensorSpec([None], tf.int32, 'label')]
 
-    def _build_graph(self, inputs):
-        image, label = inputs
+    def build_graph(self, image, label):
         image = image / 128.0
         assert tf.test.is_gpu_available()
         image = tf.transpose(image, [0, 3, 1, 2])
@@ -71,13 +70,13 @@ class Model(ModelDesc):
             l = BNReLU('bn6', l)
             # 4
 
-        logits = FullyConnected('linear', l, out_dim=10, nl=tf.identity)
+        logits = FullyConnected('linear', l, 10)
         prob = tf.nn.softmax(logits, name='output')
 
         cost = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=label)
         cost = tf.reduce_mean(cost, name='cross_entropy_loss')
 
-        wrong = prediction_incorrect(logits, label)
+        wrong = tf.cast(tf.logical_not(tf.nn.in_top_k(logits, label, 1)), tf.float32, name='wrong_vector')
         # monitor training error
         add_moving_summary(tf.reduce_mean(wrong, name='train_error'))
 
@@ -86,9 +85,10 @@ class Model(ModelDesc):
 
         add_param_summary(('.*/W', ['histogram']))  # monitor W
         self.cost = tf.add_n([cost, wd_cost], name='cost')
+        return self.cost
 
-    def _get_optimizer(self):
-        lr = get_scalar_var('learning_rate', 0.02, summary=True)
+    def optimizer(self):
+        lr = tf.get_variable('learning_rate', initializer=0.02, trainable=False)
         opt = tf.train.MomentumOptimizer(lr, 0.9)
         return opt
 
@@ -144,12 +144,13 @@ if __name__ == '__main__':
         callbacks=[
             ModelSaver(),
             InferenceRunner(dataset_test,
-                            [ScalarStats('cost'), ClassificationError()]),
+                            [ScalarStats('cost'), ClassificationError('wrong_vector')]),
             ScheduledHyperParamSetter('learning_rate',
                                       [(1, 0.02), (80, 0.002), (160, 0.0002), (300, 0.00002)])
         ],
         max_epoch=400,
-        nr_tower=max(get_nr_gpu(), 1),
+        nr_tower=max(get_num_gpu(), 1),
         session_init=SaverRestore(args.load) if args.load else None
     )
-    SyncMultiGPUTrainerParameterServer(config).train()
+    num_gpu = max(get_num_gpu(), 1)
+    launch_train_with_config(config, SyncMultiGPUTrainerParameterServer(num_gpu))

@@ -61,5 +61,5 @@ def googlenet_backbone(image, qw=1):
                   .apply(inception_block, 'incpetion_5a', 384, 320, 128)
                   .apply(inception_block, 'incpetion_5b', 512, 384, 128, is_last_block=True, is_last=True)
                   .GlobalAvgPooling('pool5')
-                  .FullyConnected('linear', out_dim=1000, nl=tf.identity)())
+                  .FullyConnected('linear', out_dim=1000)())
     return logits

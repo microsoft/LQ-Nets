@@ -191,12 +191,11 @@ class ImageNetModel(ModelDesc):
         self.double_iter = double_iter
         self.image_shape = DEFAULT_IMAGE_SHAPE
 
-    def _get_inputs(self):
-        return [InputDesc(self.image_dtype, [None, self.image_shape, self.image_shape, 3], 'input'),
-                InputDesc(tf.int32, [None], 'label')]
+    def inputs(self):
+        return [tf.TensorSpec([None, self.image_shape, self.image_shape, 3], self.image_dtype, 'input'),
+                tf.TensorSpec([None], tf.int32, 'label')]
 
-    def _build_graph(self, inputs):
-        image, label = inputs
+    def build_graph(self, image, label):
         image = ImageNetModel.image_preprocess(image, bgr=self.image_bgr)
         if self.data_format == 'NCHW':
             image = tf.transpose(image, [0, 3, 1, 2])
@@ -208,6 +207,7 @@ class ImageNetModel(ModelDesc):
                                   name='l2_regularize_loss')
         add_moving_summary(loss, wd_loss)
         self.cost = tf.add_n([loss, wd_loss], name='cost')
+        return self.cost
 
     @abstractmethod
     def get_logits(self, image):
@@ -219,7 +219,7 @@ class ImageNetModel(ModelDesc):
             Nx#class logits
         """
 
-    def _get_optimizer(self):
+    def optimizer(self):
         lr = tf.get_variable('learning_rate', initializer=self.lr, trainable=False)
         if not self.data_aug:
             global_step = get_global_step_var()

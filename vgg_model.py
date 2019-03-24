@@ -40,5 +40,5 @@ def vgg_backbone(image, qw=1):
                   .BNReLUQuant('bnquant5')
                   .Conv2DQuant('fc5', 4096, 7, nl=getfcBNReLUQuant, padding='VALID', use_bias=True)
                   .Conv2DQuant('fc6', 4096, 1, nl=getfcBNReLU, padding='VALID', use_bias=True)
-                  .FullyConnected('fc7', out_dim=1000, nl=tf.identity, W_init=variance_scaling_initializer(mode='FAN_IN'))())
+                  .FullyConnected('fc7', out_dim=1000,  kernel_initializer=variance_scaling_initializer(mode='FAN_IN'))())
     return logits

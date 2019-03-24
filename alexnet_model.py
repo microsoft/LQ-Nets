@@ -28,5 +28,5 @@ def alexnet_backbone(image, qw=1):
                   .BNReLUQuant('bnquant6')
                   .Conv2DQuant('fc6', 4096, 6, nl=getfcBNReLUQuant, padding='VALID', W_init=tf.random_normal_initializer(stddev=0.005), use_bias=True)
                   .Conv2DQuant('fc7', 4096, 1, nl=getfcBNReLU, padding='VALID', W_init=tf.random_normal_initializer(stddev=0.005), use_bias=True)
-                  .FullyConnected('fc8', out_dim=1000, nl=tf.identity, W_init=tf.random_normal_initializer(stddev=0.01))())
+                  .FullyConnected('fc8', out_dim=1000,  kernel_initializer=tf.random_normal_initializer(stddev=0.01))())
     return logits
